@@ -5,7 +5,7 @@ import OpenAI from "openai";
 // const openAi=process.env.SECRET_KEY
 import readline from 'node:readline';
 import { stdin as input, stdout as output } from 'node:process';
-const openAi = "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";
+
 // console.log("---",process.env.SECRET_KEY)
 
 const openai = new OpenAI({
