@@ -23,10 +23,10 @@ function SpeakComp() {
   };
 
   const stopListen = () => {
-    // SpeechRecognition.abortListening();
-    // fetchAndSetResponse(transcript)
-    // resetTranscript();
-    console.log(import.meta.env.VITE_SECRET_KEY)
+    SpeechRecognition.abortListening();
+    fetchAndSetResponse(transcript)
+    resetTranscript();
+    // console.log(import.meta.env.VITE_SECRET_KEY)
   };
 
   const fetchAndSetResponse = async (transcript) => {
