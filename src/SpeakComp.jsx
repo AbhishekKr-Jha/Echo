@@ -26,7 +26,7 @@ function SpeakComp() {
     // SpeechRecognition.abortListening();
     // fetchAndSetResponse(transcript)
     // resetTranscript();
-    import.meta.env.VITE_SECRET_KEY
+    console.log(import.meta.env.VITE_SECRET_KEY)
   };
 
   const fetchAndSetResponse = async (transcript) => {
