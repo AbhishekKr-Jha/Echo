@@ -20,4 +20,9 @@ export const openApi = async (input) => {
   return chatCompletion?.choices[0]?.message?.content
 };
 
-// return chatCompletion?.choices[0]?.message?.content;
+ {/* <button
+            className="m-3 px-7 py-2 rounded-md bg-blue-600 hover:bg-blue-700"
+            onClick={stopListen}
+          >
+            Stop
+          </button> */}

@@ -1,27 +1,52 @@
-import React from 'react'
+import React from "react";
+import {useSelector,useDispatch} from 'react-redux'
+import { toggleDarkMode } from "./Redux/Reducer";
+import { Link, NavLink} from "react-router-dom";
 
 function Navbar() {
+  const mode = useSelector((state) => state.darkMode.dark_mode);
+const dispatch=useDispatch()
+const darkMode=()=>{
+dispatch(toggleDarkMode())
+}
   return (
-    <nav className="w-full px-6 bg-white border-gray-200  dark:bg-gray-900">
-    <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-    {/* <a href="https://flowbite.com/" className="flex items-center space-x-3 rtl:space-x-reverse">
-        <img src="https://flowbite.com/docs/images/logo.svg" className="h-8" alt="Flowbite Logo" />
-        <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Flowbite</span>
-    </a> */}
+    <nav className={`w-full px-6   `}>
+      <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto ">
   
-    <div className="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-cta">
-      <ul className="flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
-        <li>
-          <a href="#" className="block py-2 px-3 md:p-0 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:dark:text-blue-500" aria-current="page">Home</a>
-        </li>
-        <li>
-          <a href="#" className="block py-2 px-3 md:p-0 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">About</a>
-        </li>
-      </ul>
-    </div>
-    </div>
-  </nav>
-  )
+
+        <div
+          className="items-center justify-between w-full md:flex md:w-auto md:order-1 border-b-2 border-[#2E4252] pb-2"
+          id="navbar-cta"
+        >
+          <ul className="flex flex-row font-medium px-4  py-1 mt-4 rounded-lg bg-gray-50 gap-x-6 ">
+            <NavLink to="/">
+              <span
+                className="block py-2 px-3 md:p-0  md:hover:text-blue-700 "
+                aria-current="page"
+              >
+              Echo
+              </span>
+            </NavLink>
+            <NavLink to="about">
+              <span
+                className="block py-2 px-3 md:p-0  rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 "
+              >
+                About
+              </span>
+            </NavLink>
+            <li className="cursor-pointer" onClick={darkMode}>
+              <span
+                href="#"
+                className=" block py-2 px-3 md:p-0 rounded  md:hover:text-blue-700 "
+              >
+            {mode?"LightM":"DarkM"}
+              </span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  );
 }
 
-export default Navbar
+export default Navbar;
