@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "regenerator-runtime/runtime";
 
 import { openApi } from "./openAi_func";
@@ -16,64 +16,75 @@ function SpeakComp() {
   }
 
   const [question, setQuestion] = useState([]);
-  // const [reply, setReply] = useState([]);
+  const [response,setResponse]=useState({
+    err:false,
+    info:""
+  })
+  const [show,setShow]=useState(true)
 
   const startListen = () => {
+    setResponse({err:false,info:""})
     SpeechRecognition.startListening({ continuous: true, language: "en-IN" });
   };
 
   const stopListen = () => {
     SpeechRecognition.abortListening();
-    fetchAndSetResponse(transcript)
+    fetchAndSetResponse(transcript);
     resetTranscript();
-    // console.log(import.meta.env.VITE_SECRET_KEY)
   };
 
   const fetchAndSetResponse = async (transcript) => {
+    setResponse({...response,info:"Generating..."})
+    setShow(false)
     try {
-      const response =await openApi(transcript);
-      setQuestion( [
-        ...question,
-        { que: transcript, reply: response}
-      ]);
-      console.log(response)
-      // stopListen();
+      const originalTranscript=transcript.split("use")
+      const response = await openApi(transcript.includes("use")?originalTranscript[0]:transcript);
+      setResponse({...response,info:""})
+      setShow(true)
+      setQuestion([...question, { que: transcript.includes("use")?originalTranscript[0]:transcript, reply: response }]);
+      console.log(response);
     } catch (error) {
-      console.error("Error fetching response:", error);
-    } 
+      setShow(true)
+      setResponse({err:true,info:error.message.includes("Rate limit reached")?"!!Rate limit reached for requests per minute.Try after some time!!":"!!Server is facing some issues.Try after few minutes.!!"})
+      console.error("Error fetching response:", error.message);
+    }
   };
 
-  if (transcript.includes("use")) {
-    stopListen()
-  }
+    if(transcript.includes("use"))stopListen()
+
 
   return (
     <>
-      <div className="w-full bg-red mt-[30px] flex flex-col items-center">
-        <div className=" bg-red-300  w-full rounded-lg max-w-[800px] h-[200px]">
-          {transcript}
-        </div>
+      <div className=" w-full   mt-[30px] flex justify-center flex-col items-center">
+        <div
+          className=" bg-gray-500  w-full md:[80%] max-w-[600px] p-5 rounded-lg  h-[200px]"
+        >{transcript}</div>
+       
 
-        <div className="my-4 flex gap-14 justify-center">
-          <button
-            className="m-3 px-7 py-2 rounded-md bg-blue-600 hover:bg-blue-700"
+       {show &&    <div className="my-6 flex gap-14 justify-center">
+         <button
+            className=" px-7 py-2 rounded-md bg-blue-600 hover:bg-blue-700"
             onClick={startListen}
           >
             Start
           </button>
-          <button
-            className="m-3 px-7 py-2 rounded-md bg-blue-600 hover:bg-blue-700"
-            onClick={stopListen}
+        </div>}
+          <p className={`font-semibold text-lg ${response.err && " text-red-600"}`}>hello goor ons noe found iy</p>
+        {/* {question.map((item, index) => (
+          <div
+            key={index}
+            className="flex-col gap-y-9 bg-gray-500 my-3 px-3 py-1 rounded-md w-[97%] max-w-[700px]"
           >
-            Stop
-          </button>
-        </div>
-        {question.map((item, index) => (
-<div key={index}  className="flex-col gap-y-9 bg-gray-500 my-3 px-3 py-1 rounded-md w-[97%] max-w-[700px]">
-  <p> {item.que}</p>
-  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;reply:{item.reply}</p>
-</div>
-        ))}
+            <p> {item.que}</p>
+            <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;reply:{item.reply}</p>
+          </div>
+        ))} */}
+        <div
+            className="flex-col gap-y-9 bg-gray-500 my-3 px-3 py-1 rounded-md w-[97%] max-w-[700px]"
+          >
+            <p> hello how are you </p>
+            <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;reply: Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatum, laboriosam? Fuga iste veritatis mollitia quisquam, ratione voluptate corrupti accusantium maiores?</p>
+          </div>
       </div>
     </>
   );
