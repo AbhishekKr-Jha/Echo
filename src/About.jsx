@@ -72,7 +72,7 @@ function About() {
           type="text"
           name=""
         />
-        <p className="text-red-600 text-base font-semibold w-[80%]"> !!  Execution keyword length can not be less than 3 !! <span>Try some uncommon keywords which don't have a same pronounciation ( like hello, good, google etc ).</span></p>
+        <p className="text-red-600 text-base font-semibold w-[90%] md:w-[80%]"> !!  Execution keyword length can not be less than 3 characters !! <span> Try some uncommon single keywords which don't have a same pronounciation ( like hello, good, google etc ) for a better experience.</span></p>
         <div className="flex gap-x-8 mb-7 mt-4">  
         
         <button onClick={()=>setChange(false)} type="button" className="  px-6 py-2 text-base  rounded-md bg-blue-600 hover:bg-blue-700">

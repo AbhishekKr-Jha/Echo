@@ -28,7 +28,7 @@ function SpeakComp() {
   const startListen = () => {
     setResponse({ err: false, info: "" });
     SpeechRecognition.startListening({ continuous: true, language: "en-IN" });
-    if(!localStorage.getItem("Execution_key") || localStorage.getItem("Execution_key")?.length>=3){
+    if(!localStorage.getItem("Execution_key") || localStorage.getItem("Execution_key")?.length<3){
       localStorage.setItem('Execution_key','Friday')
     }
   };

@@ -8,7 +8,7 @@ import About from "./About";
 function App() {
   
   useEffect(()=>{
-  localStorage.getItem('Execution_key')?"":localStorage.setItem('Execution_key','Friday')
+  !localStorage.getItem('Execution_key')?localStorage.setItem('Execution_key','Friday'):""
   },[])
 
 
