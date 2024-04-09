@@ -21,7 +21,7 @@ function App() {
 {/* <SpeakComp/> */}
 <Routes>
           <Route path="/" element={<SpeakComp />} />
-          <Route path="about" element={<About/>} />
+          <Route path="/about" element={<About/>} />
 </Routes>
   </div>
    </>
